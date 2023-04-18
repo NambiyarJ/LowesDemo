@@ -1,9 +1,7 @@
-package com.demo.orderpublisher;
+package com.demo.orderqueue;
 
- 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +17,10 @@ import javax.jms.Session;
 
 @RestController
 @RequestMapping("/api/v1")
-public class publishController {
+public class PublishController {
 	
 	@Autowired
 	JmsTemplate jmsTemplate;
-	
 	
 	@GetMapping("/publish/{message}")
 	public String publish(@PathVariable("message") String content) {
@@ -38,7 +35,6 @@ public class publishController {
 			
 		});
 		 
-		
 		return content;
 	}
  

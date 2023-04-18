@@ -1,10 +1,10 @@
-package com.demo.orderpublisher;
+package com.demo.orderqueue;
 
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class consumer {
+public class Consumer {
 
 	@JmsListener(destination = "orderqueue")
 	public void receiveOrder(String order) {
