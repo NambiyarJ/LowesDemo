@@ -21,31 +21,40 @@ public class Publisher {
 	@Autowired
 	JmsTemplate jmsTemplate;
 	
-	public Orders publishOrder(JmsTemplate jmsTemplate, Orders order) {
-		System.out.println("createorders-----" + order.getOrderNumber());
+	public Orders publishCreateOrder(JmsTemplate jmsTemplate, Orders order) {
+	//	System.out.println("createorders-----" + order.getOrderNumber());
 		StringBuilder json = new StringBuilder();
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		try {
 			 json.append(ow.writeValueAsString(order));
-			System.out.println("json----->>>>" + json);
+			//System.out.println("json----->>>>" + json);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		jmsTemplate.send("orderqueue", new MessageCreator() {
+		jmsTemplate.send("createorderqueue", new MessageCreator() {
 			
 			@Override
 			public Message createMessage(Session session) throws JMSException {
 				ObjectMessage object = session.createObjectMessage(json);
-				
-				System.out.println("createorders orderqueur-----" + json);
-
+		//		System.out.println("createorders orderqueur-----" + json);
 				return object;
 			}
-						
 		});
-					 
 		return order;
 	}
+	
+	public String publishUpdateOrder(JmsTemplate jmsTemplate, String orderNumber) { 
+		jmsTemplate.send("updateorderqueue", new MessageCreator() {
+			
+			@Override
+			public Message createMessage(Session session) throws JMSException {
+				ObjectMessage object = session.createObjectMessage(orderNumber);
+				return object;
+			}
+		});
+		return orderNumber;
+	}
+	
 }

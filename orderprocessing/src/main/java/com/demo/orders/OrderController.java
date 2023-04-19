@@ -16,7 +16,7 @@ import com.demo.service.OrderService;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/api/order")
+@RequestMapping("/api/v1/order")
 public class OrderController {
 	@Autowired
 	OrderService orderService;
@@ -26,19 +26,19 @@ public class OrderController {
 		return orderService.createOrders(order);
 	}
 	
-	@GetMapping("/getOrdersById/{id}")
+	@GetMapping("/getById/{id}")
 	public Orders getOrdersById(@PathVariable("id") String id) {
 		return orderService.getOrdersById(id);
 	}
 	
-	@GetMapping("/getOrdersByNumber")
+	@GetMapping("/getByNumber")
 	public Orders getOrdersByNumber(@RequestParam("orderNumber") String orderNumber) {
 		return orderService.getOrdersByNumber(orderNumber);
 	}
 	
-	@PutMapping("/updateOrderStatus")
-	public Orders updateOrderStatus(@RequestBody Orders order) {
-		return orderService.updateOrderStatus(order);
+	@PutMapping("/updateStatus")
+	public Orders updateOrderStatus(@RequestParam("orderNumber") String orderNumber) {
+		return orderService.updateOrderStatus(orderNumber);
 	}
 	
 	

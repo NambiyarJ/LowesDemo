@@ -8,5 +8,5 @@ import com.demo.orderentities.Orders;
 
 @Repository
 public interface OrderRepository extends MongoRepository<Orders, String> {
-	Orders findByorderNumber(String orderNumber);
+	Orders findByOrderNumber(String orderNumber);
 }

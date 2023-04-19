@@ -19,30 +19,28 @@ public class Consumer {
 	@Autowired
 	OrderService orderService;
 	
-	@JmsListener(destination = "orderqueue")
-	public void receiveOrder(String orderMessage) {
+	@JmsListener(destination = "createorderqueue")
+	public void receiveCreateOrder(String orderMessage) {
 		System.out.println("receiveOrder 1-.>>>>>>>>" + orderMessage);
 
-		ObjectMapper mapper = new ObjectMapper();
-				
+		ObjectMapper mapper = new ObjectMapper();	
 	    try {
 			Orders order = mapper.readValue(orderMessage, Orders.class);
 			
 			orderService.createOrders(order);
 			System.out.println("receiveOrder------>" + order.getOrderNumber());
 		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		//Orders order = orderMessage;
- 	//	System.out.println("receiveOrder 2-.>>>>>>>>" + response);
-
+ 	}
+	
+	@JmsListener(destination = "updateorderqueue")
+	public void receiveUpdateOrder(String orderNumber) { 
+		orderService.updateOrderStatus(orderNumber);
  	}
 }

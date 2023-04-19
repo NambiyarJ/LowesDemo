@@ -29,22 +29,21 @@ public class OrderService {
 	}
 	 
 	public Orders getOrdersByNumber(String orderNumber) {
-		return  orderRepository.findByorderNumber(orderNumber);
+		return  orderRepository.findByOrderNumber(orderNumber);
 	}
 	
-	public Orders updateOrderStatus(Orders order) {
-		
+	public Orders updateOrderStatus(String orderNumber) {
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(DBConfig.class);
 		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 		
 		Query updateQuery = new Query();
-		updateQuery.addCriteria(Criteria.where("orderNumber").is(order.getOrderNumber()));
+		updateQuery.addCriteria(Criteria.where("orderNumber").is(orderNumber));
 
 		Orders updateOrder = mongoOperation.findOne(updateQuery, Orders.class);
 
 		System.out.println("updateQuery - " + updateOrder.getStatus());
 
-		updateOrder.setStatus(order.getStatus());
+		updateOrder.setStatus("processed");
 		return mongoOperation.save(updateOrder);
 	}
 	 
