@@ -1,4 +1,4 @@
-package com.demo.orders;
+package com.demo.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.orderentities.Orders;
+import com.demo.model.Orders;
 import com.demo.service.OrderService;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api/v1/order")
-public class OrderController {
+public class OrderApi {
 	@Autowired
 	OrderService orderService;
 	
@@ -40,6 +40,4 @@ public class OrderController {
 	public Orders updateOrderStatus(@RequestParam("orderNumber") String orderNumber) {
 		return orderService.updateOrderStatus(orderNumber);
 	}
-	
-	
 }

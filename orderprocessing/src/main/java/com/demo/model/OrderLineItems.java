@@ -1,4 +1,4 @@
-package com.demo.orderentities;
+package com.demo.model;
 
 public class OrderLineItems {
 	

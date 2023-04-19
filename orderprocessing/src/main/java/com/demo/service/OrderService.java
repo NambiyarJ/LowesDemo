@@ -4,9 +4,9 @@ package com.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.demo.orderentities.Orders;
-import com.demo.repositories.OrderRepository;
-import com.demo.DBConfig.*;
+import com.demo.repository.OrderRepository;
+import com.demo.configuration.*;
+import com.demo.model.Orders;
 
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -41,7 +41,7 @@ public class OrderService {
 
 		Orders updateOrder = mongoOperation.findOne(updateQuery, Orders.class);
 
-		System.out.println("updateQuery - " + updateOrder.getStatus());
+		//System.out.println("updateQuery - " + updateOrder.getStatus());
 
 		updateOrder.setStatus("processed");
 		return mongoOperation.save(updateOrder);

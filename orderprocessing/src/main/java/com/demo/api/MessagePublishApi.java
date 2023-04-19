@@ -1,5 +1,4 @@
-package com.demo.orderqueue;
-
+package com.demo.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
@@ -11,27 +10,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.orderentities.Orders;
-
+import com.demo.model.Orders;
+import com.demo.service.PublishService;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api/v1/orderqueue")
-public class PublishController {
-	
+public class MessagePublishApi {
 	@Autowired
 	JmsTemplate jmsTemplate;
 	
 	@PostMapping("/publishCreateOrder")
-	public Orders createOrders(@RequestBody Orders order) {
-		Publisher publishObj = new Publisher(); 
+	public String createOrders(@RequestBody Orders order) {
+		PublishService publishObj = new PublishService(); 
 		return publishObj.publishCreateOrder(jmsTemplate, order);
 	} 
 	
 	@PutMapping("/publishUpdateOrder")
 	public String updateOrders(@RequestParam("orderNumber") String orderNumber) {
-		Publisher publishObj = new Publisher(); 
+		PublishService publishObj = new PublishService(); 
 		return publishObj.publishUpdateOrder(jmsTemplate, orderNumber);
 	}
-	
 }

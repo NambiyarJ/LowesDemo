@@ -1,10 +1,10 @@
-package com.demo.repositories;
+package com.demo.repository;
 
  
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.demo.orderentities.Orders;
+import com.demo.model.Orders;
 
 @Repository
 public interface OrderRepository extends MongoRepository<Orders, String> {
