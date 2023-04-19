@@ -4,14 +4,15 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
  
-@Document(collection = "Orders")
+@Document(collection = "orders")
 public class Orders {
 	
 	@Id
 	private String id;
 	
- 	private String orderNumber;
+  	private String orderNumber;
 	
 	private String status;
 	 
