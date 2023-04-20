@@ -1,4 +1,4 @@
-package com.demo.json.serializer;
+package com.demo.serializer;
 
 import com.demo.model.Orders;
 import com.fasterxml.jackson.core.JsonProcessingException;

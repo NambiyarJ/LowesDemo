@@ -4,9 +4,9 @@ package com.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
- 
-import com.demo.json.serializer.ObjectToJsonSerializer;
+
 import com.demo.model.Orders;
+import com.demo.serializer.ObjectToJsonSerializer;
   
 public class PublishService {
 	@Autowired
