@@ -18,7 +18,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @AllArgsConstructor
-//@EnableWebSecurity
 public class SecurityConfig {
 
 	@Autowired
@@ -27,14 +26,14 @@ public class SecurityConfig {
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic(withDefaults())
-                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+	        .csrf()
+	        .disable()
+	        .authorizeHttpRequests()
+	        .anyRequest()
+	        .authenticated()
+	        .and()
+	        .httpBasic(withDefaults())
+	        .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
 	
@@ -44,13 +43,7 @@ public class SecurityConfig {
 				.username("admin")
 				.password(passwordEncoder.encode("admin-pass"))
 				.roles("ADMIN")
-				.build();
-		
-//		UserDetails user = User.builder()
-//				.username("admin")
-//				.password(passwordEncoder.encode("user-pass"))
-//				.roles("USER")
-//				.build();
+				.build(); 
 		
 		return new InMemoryUserDetailsManager(admin);
 		

@@ -12,14 +12,13 @@ public class MessageService {
 	
 	public String publishCreateOrder(JmsTemplate jmsTemplate, String queueName, String json) { 
 			
-			jmsTemplate.send(queueName, new MessageCreator() {
-				@Override
-				public Message createMessage(Session session) throws JMSException {
-					ObjectMessage object = session.createObjectMessage(json);
-			//		System.out.println("createorders orderqueur-----" + json);
-					return object;
-				}
-			});
-			return "SUCCESS";
-		}
+		jmsTemplate.send(queueName, new MessageCreator() {
+			@Override
+			public Message createMessage(Session session) throws JMSException {
+				ObjectMessage object = session.createObjectMessage(json);
+				return object;
+			}
+		});
+		return "SUCCESS";
+	}
 }

@@ -5,14 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.repository.OrderRepository;
-import com.demo.configuration.*;
-import com.demo.model.Orders;
-
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import com.demo.model.Orders; 
 
 @Service
 public class OrderService {
@@ -33,18 +26,10 @@ public class OrderService {
 	}
 	
 	public Orders updateOrderStatus(String orderNumber) {
-		ApplicationContext ctx = new AnnotationConfigApplicationContext(DBConfig.class);
-		MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
-		
-		Query updateQuery = new Query();
-		updateQuery.addCriteria(Criteria.where("orderNumber").is(orderNumber));
-
-		Orders updateOrder = mongoOperation.findOne(updateQuery, Orders.class);
-
-		//System.out.println("updateQuery - " + updateOrder.getStatus());
-
-		updateOrder.setStatus("processed");
-		return mongoOperation.save(updateOrder);
+		 Orders order = getOrdersByNumber(orderNumber);
+		 order.setStatus("processed");
+		 orderRepository.save(order);
+		 return order;
 	}
 	 
 }

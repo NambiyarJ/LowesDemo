@@ -33,6 +33,9 @@ public class ConsumerService {
 	
 	@JmsListener(destination = "updateorderqueue")
 	public void receiveUpdateOrder(String orderNumber) { 
-		orderService.updateOrderStatus(orderNumber);
+		try {
+			orderService.updateOrderStatus(orderNumber);
+		} catch (Exception e) {
+		}
  	}
 }
