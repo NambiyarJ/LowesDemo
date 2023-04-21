@@ -14,7 +14,6 @@ public class ObjectToJsonSerializer {
 			 json.append(ow.writeValueAsString(order));
 			//System.out.println("json----->>>>" + json);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return json.toString();
