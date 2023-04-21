@@ -1,12 +1,12 @@
 package com.demo.model;
 
 public class OrderLineItems {
-
+	
 	private String lineItem;
 
 	private String orderQuantity;
 
-	private String UOM;
+	private String uom;
 
 	private String unitPrice;
 
@@ -26,13 +26,7 @@ public class OrderLineItems {
 		this.orderQuantity = orderQuantity;
 	}
 
-	public String getUOM() {
-		return UOM;
-	}
-
-	public void setUOM(String uOM) {
-		UOM = uOM;
-	}
+ 
 
 	public String getUnitPrice() {
 		return unitPrice;
@@ -40,6 +34,14 @@ public class OrderLineItems {
 
 	public void setUnitPrice(String unitPrice) {
 		this.unitPrice = unitPrice;
+	}
+
+	public String getUom() {
+		return uom;
+	}
+
+	public void setUom(String uom) {
+		this.uom = uom;
 	}
 
 }
