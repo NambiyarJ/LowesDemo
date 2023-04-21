@@ -9,9 +9,9 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
 public class MessageService {
-	
-	public String publishCreateOrder(JmsTemplate jmsTemplate, String queueName, String json) { 
-			
+
+	public String publishCreateOrder(JmsTemplate jmsTemplate, String queueName, String json) {
+
 		jmsTemplate.send(queueName, new MessageCreator() {
 			@Override
 			public Message createMessage(Session session) throws JMSException {

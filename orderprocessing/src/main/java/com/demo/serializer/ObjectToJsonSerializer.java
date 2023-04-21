@@ -11,8 +11,8 @@ public class ObjectToJsonSerializer {
 		StringBuilder json = new StringBuilder();
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		try {
-			 json.append(ow.writeValueAsString(order));
-			//System.out.println("json----->>>>" + json);
+			json.append(ow.writeValueAsString(order));
+			// System.out.println("json----->>>>" + json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}

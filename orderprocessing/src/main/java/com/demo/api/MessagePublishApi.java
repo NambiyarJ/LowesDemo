@@ -19,16 +19,16 @@ import com.demo.service.PublishService;
 public class MessagePublishApi {
 	@Autowired
 	JmsTemplate jmsTemplate;
-	
+
 	@PostMapping("/publishCreateOrder")
 	public String createOrders(@RequestBody Orders order) {
-		PublishService publishObj = new PublishService(); 
+		PublishService publishObj = new PublishService();
 		return publishObj.publishCreateOrder(jmsTemplate, order);
-	} 
-	
+	}
+
 	@PutMapping("/publishUpdateOrder")
 	public String updateOrders(@RequestParam("orderNumber") String orderNumber) {
-		PublishService publishObj = new PublishService(); 
+		PublishService publishObj = new PublishService();
 		return publishObj.publishUpdateOrder(jmsTemplate, orderNumber);
 	}
 }

@@ -6,19 +6,18 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 
-
 @Document(collection = "orders")
 public class Orders implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;
-	
-  	private String orderNumber;
-	
+
+	private String orderNumber;
+
 	private String status;
-	 
+
 	private List<OrderLineItems> lineItems;
 
 	public String getId() {
@@ -28,7 +27,7 @@ public class Orders implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getOrderNumber() {
 		return orderNumber;
 	}
@@ -36,7 +35,7 @@ public class Orders implements Serializable {
 	public void setOrderNumber(String orderNumber) {
 		this.orderNumber = orderNumber;
 	}
- 
+
 	public String getStatus() {
 		return status;
 	}

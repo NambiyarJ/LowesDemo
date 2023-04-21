@@ -22,33 +22,21 @@ public class SecurityConfig {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	 
+
 	@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-	        .csrf()
-	        .disable()
-	        .authorizeHttpRequests()
-	        .anyRequest()
-	        .authenticated()
-	        .and()
-	        .httpBasic(withDefaults())
-	        .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        return http.build();
-    }
-	
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.csrf().disable().authorizeHttpRequests().anyRequest().authenticated().and().httpBasic(withDefaults())
+				.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		return http.build();
+	}
+
 	@Bean
 	public UserDetailsService users() {
-		UserDetails admin = User.builder()
-				.username("admin")
-				.password(passwordEncoder.encode("admin-pass"))
-				.roles("ADMIN")
-				.build(); 
-		
-		return new InMemoryUserDetailsManager(admin);
-		
-	}
-  
+		UserDetails admin = User.builder().username("admin").password(passwordEncoder.encode("admin-pass"))
+				.roles("ADMIN").build();
 
-     
+		return new InMemoryUserDetailsManager(admin);
+
+	}
+
 }
