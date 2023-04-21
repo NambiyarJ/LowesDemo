@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
-import com.demo.serializer.StringToObjectSerializer;
+import com.demo.serializer.JsonSerializer;
 
 @Component
 public class ConsumerService {
@@ -13,8 +13,7 @@ public class ConsumerService {
 
 	@JmsListener(destination = "createorderqueue")
 	public void receiveCreateOrder(String orderMessage) {
-		StringToObjectSerializer strToObj = new StringToObjectSerializer();
-		orderService.createOrders(strToObj.getOrderObject(orderMessage));
+		orderService.createOrders(JsonSerializer.getOrderObject(orderMessage));
 	}
 
 	@JmsListener(destination = "updateorderqueue")
