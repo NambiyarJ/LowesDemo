@@ -24,11 +24,11 @@ public class SecurityConfig {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
-	@Value("${spring.data.security.username}")
-	private String username;
-
-	@Value("${spring.data.security.password}")
-	private String password;
+//	@Value("${spring.data.security.username}")
+//	private String username;
+//
+//	@Value("${spring.data.security.password}")
+//	private String password;
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -39,7 +39,7 @@ public class SecurityConfig {
 
 	@Bean
 	UserDetailsService users() {
-		UserDetails admin = User.builder().username(username).password(passwordEncoder.encode(password)).roles("ADMIN")
+		UserDetails admin = User.builder().username("admin").password(passwordEncoder.encode("admin-pass")).roles("ADMIN")
 				.build();
 
 		return new InMemoryUserDetailsManager(admin);

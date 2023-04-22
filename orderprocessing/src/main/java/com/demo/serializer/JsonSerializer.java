@@ -6,7 +6,6 @@ import java.io.IOException;
 import com.demo.model.Orders;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,11 +16,6 @@ public class JsonSerializer {
 	}
 
 	public static <T> T fromJson(ObjectMapper objectMapper, String payload, Class<T> clazz)
-			throws JsonProcessingException {
-		return objectMapper.readValue(payload, clazz);
-	}
-
-	public static <T> T fromJson(ObjectMapper objectMapper, String payload, TypeReference<T> clazz)
 			throws JsonProcessingException {
 		return objectMapper.readValue(payload, clazz);
 	}
