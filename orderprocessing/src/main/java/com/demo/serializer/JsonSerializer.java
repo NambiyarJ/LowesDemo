@@ -2,26 +2,15 @@ package com.demo.serializer;
 
 import java.io.IOException;
 
+
 import com.demo.model.Orders;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
 public class JsonSerializer {
-
-	public static String getObjectToJson(Orders order) {
-		StringBuilder json = new StringBuilder();
-		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		try {
-			json.append(ow.writeValueAsString(order));
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return json.toString();
-	}
 
 	public static <T> String toJson(ObjectMapper objectMapper, T object) throws JsonProcessingException {
 		return objectMapper.writeValueAsString(object);

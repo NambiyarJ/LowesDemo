@@ -46,9 +46,4 @@ public class OrderApi {
 	public Orders deleteOrder(@PathVariable("orderNumber") String orderNumber) {
 		return orderService.deleteOrder(orderNumber);
 	}
-	
-	@GetMapping("/getMessage/{message}")
-	public String getMessage(@PathVariable("message") String message) {
-		return "SUCCESS";
-	}
 }

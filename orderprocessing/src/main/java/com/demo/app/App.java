@@ -17,7 +17,7 @@ public class App {
 	}
 
 	@Bean
-	 BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
+	BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder(8);
 	}
 }

@@ -1,6 +1,7 @@
 package com.demo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,17 +24,23 @@ public class SecurityConfig {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
+	@Value("${spring.data.security.username}")
+	private String username;
+
+	@Value("${spring.data.security.password}")
+	private String password;
+
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeHttpRequests().anyRequest().authenticated().and().httpBasic(withDefaults())
 				.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		return http.build();
 	}
 
 	@Bean
-	public UserDetailsService users() {
-		UserDetails admin = User.builder().username("admin").password(passwordEncoder.encode("admin-pass"))
-				.roles("ADMIN").build();
+	UserDetailsService users() {
+		UserDetails admin = User.builder().username(username).password(passwordEncoder.encode(password)).roles("ADMIN")
+				.build();
 
 		return new InMemoryUserDetailsManager(admin);
 

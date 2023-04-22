@@ -1,25 +1,27 @@
 package com.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import com.demo.model.Orders;
 import com.demo.serializer.JsonSerializer;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class PublishService {
-	@Autowired
-	JmsTemplate jmsTemplate;
 
 	@Autowired
 	MessageService messageService;
-
-	public String publishCreateOrder(JmsTemplate jmsTemplate, Orders order) {
-		return messageService.publishMessages(jmsTemplate, "createorderqueue", JsonSerializer.getObjectToJson(order));
+	
+	@Autowired
+	ObjectMapper objectMapper;
+	 
+	public String publishCreateOrder(Orders order) throws JsonProcessingException {
+		return messageService.publishMessages("createorderqueue", JsonSerializer.toJson(objectMapper, order));
 	}
 
-	public String publishUpdateOrder(JmsTemplate jmsTemplate, String orderNumber) {
-		return messageService.publishMessages(jmsTemplate, "updateorderqueue", orderNumber);
+	public String publishUpdateOrder(String orderNumber) {
+		return messageService.publishMessages("updateorderqueue", orderNumber);
 	}
 }

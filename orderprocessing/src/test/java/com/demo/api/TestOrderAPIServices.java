@@ -22,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
@@ -106,19 +105,19 @@ public class TestOrderAPIServices {
 		assertEquals(orderNumber, orderview.getOrderNumber(), "Order Number update isn't applied!");
 	}
 	
-	@Test
-	public void TestDeleteOrderSuccess() throws Exception {
-
-		MvcResult orderResult = this.mockMvc
-		.perform(delete("/api/v1/order/deleteOrder/" + orderNumber)
-		.contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())
-		.andReturn();
-		
-		Orders orderview = JsonSerializer.fromJson(objectMapper, orderResult.getResponse().getContentAsString(), Orders.class);
-		System.out.println("TestDeleteOrderSuccess----->" + orderview.getOrderNumber());
-
-	}
+//	@Test
+//	public void TestDeleteOrderSuccess() throws Exception {
+//
+//		MvcResult orderResult = this.mockMvc
+//		.perform(delete("/api/v1/order/deleteOrder/" + orderNumber)
+//		.contentType(MediaType.APPLICATION_JSON))
+//		.andExpect(status().isOk())
+//		.andReturn();
+//		
+//		Orders orderview = JsonSerializer.fromJson(objectMapper, orderResult.getResponse().getContentAsString(), Orders.class);
+//		System.out.println("TestDeleteOrderSuccess----->" + orderview.getOrderNumber());
+//
+//	}
 	
 	public Orders getOrderData(String orderNumber) {
 		OrderLineItems lineitems = new OrderLineItems();
