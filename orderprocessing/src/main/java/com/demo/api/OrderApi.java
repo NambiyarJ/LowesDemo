@@ -33,7 +33,6 @@ public class OrderApi {
 
 	@GetMapping("/getByNumber/{orderNumber}")
 	public Orders getOrdersByNumber(@PathVariable("orderNumber") String orderNumber) {
-		System.out.println(orderNumber);
 		return orderService.getOrdersByNumber(orderNumber);
 	}
 
@@ -41,7 +40,7 @@ public class OrderApi {
 	public Orders updateOrderStatus(@PathVariable("orderNumber") String orderNumber) {
 		return orderService.updateOrderStatus(orderNumber);
 	}
-	
+
 	@GetMapping("/getMessage/{message}")
 	public String getMessage(@PathVariable("message") String message) {
 		return "SUCCESS";

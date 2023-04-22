@@ -17,13 +17,12 @@ public class JsonSerializer {
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		try {
 			json.append(ow.writeValueAsString(order));
-			// System.out.println("json----->>>>" + json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
 		return json.toString();
 	}
-	
+
 	public static <T> String toJson(ObjectMapper objectMapper, T object) throws JsonProcessingException {
 		return objectMapper.writeValueAsString(object);
 	}
@@ -37,7 +36,7 @@ public class JsonSerializer {
 			throws JsonProcessingException {
 		return objectMapper.readValue(payload, clazz);
 	}
-	
+
 	public static Orders getOrderObject(String orderMessage) {
 		ObjectMapper mapper = new ObjectMapper();
 		Orders order = null;

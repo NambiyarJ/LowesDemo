@@ -1,7 +1,7 @@
 package com.demo.model;
 
 public class OrderLineItems {
-	
+
 	private String lineItem;
 
 	private String orderQuantity;
@@ -25,8 +25,6 @@ public class OrderLineItems {
 	public void setOrderQuantity(String orderQuantity) {
 		this.orderQuantity = orderQuantity;
 	}
-
- 
 
 	public String getUnitPrice() {
 		return unitPrice;

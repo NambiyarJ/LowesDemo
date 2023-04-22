@@ -1,12 +1,9 @@
 package com.demo.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.repository.OrderRepository;
-import com.demo.model.OrderLineItems;
 import com.demo.model.Orders;
 
 @Service
@@ -24,8 +21,6 @@ public class OrderService {
 	}
 
 	public Orders getOrdersByNumber(String orderNumber) {
-		System.out.println(orderNumber);
-
 		return orderRepository.findByOrderNumber(orderNumber);
 	}
 

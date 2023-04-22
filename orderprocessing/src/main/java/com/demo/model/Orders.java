@@ -2,24 +2,13 @@ package com.demo.model;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
- 
 import java.io.Serializable;
 
-@Builder
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
- 
- 
 @Document(collection = "orders")
 public class Orders implements Serializable {
 
@@ -28,6 +17,7 @@ public class Orders implements Serializable {
 	@Id
 	private String id;
 
+	@NotNull(message = "OrderNumber must not be null")
 	private String orderNumber;
 
 	private String status;
@@ -65,5 +55,4 @@ public class Orders implements Serializable {
 	public void setLineItems(List<OrderLineItems> lineItems) {
 		this.lineItems = lineItems;
 	}
-
 }
