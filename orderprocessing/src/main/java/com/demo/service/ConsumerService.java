@@ -13,7 +13,7 @@ public class ConsumerService {
 
 	@JmsListener(destination = "createorderqueue")
 	public void receiveCreateOrder(String orderMessage) {
-		orderService.createOrders(JsonSerializer.getOrderObject(orderMessage));
+		orderService.createOrder(JsonSerializer.getOrderObject(orderMessage));
 	}
 
 	@JmsListener(destination = "updateorderqueue")

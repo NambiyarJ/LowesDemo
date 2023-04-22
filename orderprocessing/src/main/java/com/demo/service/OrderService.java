@@ -12,7 +12,7 @@ public class OrderService {
 	@Autowired
 	OrderRepository orderRepository;
 
-	public Orders createOrders(Orders order) {
+	public Orders createOrder(Orders order) {
 		return orderRepository.save(order);
 	}
 
@@ -29,6 +29,10 @@ public class OrderService {
 		order.setStatus("processed");
 		orderRepository.save(order);
 		return order;
+	}
+	
+	public Orders deleteOrder(String orderNumber) {
+		return orderRepository.deleteByOrderNumber(orderNumber);
 	}
 
 }

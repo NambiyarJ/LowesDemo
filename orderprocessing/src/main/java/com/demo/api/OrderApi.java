@@ -2,6 +2,7 @@ package com.demo.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +23,8 @@ public class OrderApi {
 	OrderService orderService;
 
 	@PostMapping("/create")
-	public Orders createOrders(@RequestBody Orders order) {
-		return orderService.createOrders(order);
+	public Orders createOrder(@RequestBody Orders order) {
+		return orderService.createOrder(order);
 	}
 
 	@GetMapping("/getById/{id}")
@@ -41,6 +42,11 @@ public class OrderApi {
 		return orderService.updateOrderStatus(orderNumber);
 	}
 
+	@DeleteMapping("/deleteOrder/{orderNumber}")
+	public Orders deleteOrder(@PathVariable("orderNumber") String orderNumber) {
+		return orderService.deleteOrder(orderNumber);
+	}
+	
 	@GetMapping("/getMessage/{message}")
 	public String getMessage(@PathVariable("message") String message) {
 		return "SUCCESS";
