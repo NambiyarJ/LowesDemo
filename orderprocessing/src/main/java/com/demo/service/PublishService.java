@@ -6,19 +6,21 @@ import org.springframework.stereotype.Service;
 import com.demo.model.Orders;
 import com.demo.serializer.JsonSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class PublishService {
 
+	private final MessageService messageService;
+	private final JsonSerializer jsonSerializer;
+
 	@Autowired
-	MessageService messageService;
-	
-	@Autowired
-	ObjectMapper objectMapper;
-	 
+	public PublishService(MessageService messageService, JsonSerializer jsonSerializer) {
+		this.messageService = messageService;
+		this.jsonSerializer = jsonSerializer;
+	}
+
 	public String publishCreateOrder(Orders order) throws JsonProcessingException {
-		return messageService.publishMessages("createorderqueue", JsonSerializer.toJson(objectMapper, order));
+		return messageService.publishMessages("createorderqueue", jsonSerializer.toJson(order));
 	}
 
 	public String publishUpdateOrder(String orderNumber) {

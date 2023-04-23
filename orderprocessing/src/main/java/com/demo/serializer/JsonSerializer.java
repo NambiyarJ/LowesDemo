@@ -1,37 +1,35 @@
 package com.demo.serializer;
 
-import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
-import com.demo.model.Orders;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Component
 public class JsonSerializer {
 
-	public static <T> String toJson(ObjectMapper objectMapper, T object) throws JsonProcessingException {
-		return objectMapper.writeValueAsString(object);
-	}
+	@Autowired
+	ObjectMapper objectMapper;
 
-	public static <T> T fromJson(ObjectMapper objectMapper, String payload, Class<T> clazz)
-			throws JsonProcessingException {
-		return objectMapper.readValue(payload, clazz);
-	}
-
-	public static Orders getOrderObject(String orderMessage) {
-		ObjectMapper mapper = new ObjectMapper();
-		Orders order = null;
+	public <T> String toJson(T object) {
 		try {
-			order = mapper.readValue(orderMessage, Orders.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+			return objectMapper.writeValueAsString(object);
+		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		return order;
+		return null;
+	}
+
+	public <T> T fromJson(String payload, Class<T> clazz) {
+		try {
+			return objectMapper.readValue(payload, clazz);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

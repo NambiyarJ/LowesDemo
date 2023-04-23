@@ -5,7 +5,6 @@ import com.demo.model.OrderLineItems;
 import com.demo.model.Orders;
 import com.demo.serializer.JsonSerializer;
 import com.demo.service.OrderService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,34 +31,31 @@ public class TestOrderAPIServices {
 
 	private final MockMvc mockMvc;
 	private final OrderService orderservice;
-	private final ObjectMapper objectMapper;
+	private final JsonSerializer jsonSerializer;
+
 	private final String orderNumber = "100021";
 
 	@Autowired
-	public TestOrderAPIServices(MockMvc mockMvc, OrderService orderservice, ObjectMapper objectMapper) {
+	public TestOrderAPIServices(MockMvc mockMvc, OrderService orderservice, JsonSerializer jsonSerializer) {
 		this.mockMvc = mockMvc;
-		this.objectMapper = objectMapper;
 		this.orderservice = orderservice;
+		this.jsonSerializer = jsonSerializer;
 	}
 
 	@Test
 	public void TestCreateOrderQueueAPISuccess() throws Exception {
-		Orders order = getOrderData(orderNumber);
-		MvcResult createResult = this.mockMvc
-				.perform(post("/api/v1/orderqueue/publishCreateOrder")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(JsonSerializer.toJson(objectMapper, order)))
-				.andExpect(status().isOk())
-				.andReturn();
+		Orders order = getOrderMockData(orderNumber);
+		MvcResult createResult = this.mockMvc.perform(post("/api/v1/orderqueue/publishCreateOrder")
+				.contentType(MediaType.APPLICATION_JSON).content(jsonSerializer.toJson(order)))
+				.andExpect(status().isOk()).andReturn();
 
-	    Orders orderDetails = orderservice.getOrdersByNumber(orderNumber);
+		Orders orderDetails = orderservice.getOrdersByNumber(orderNumber);
 
 		System.out.println("TestCreateOrderQueueAPISuccess----->" + orderDetails.getOrderNumber());
 		assertEquals("SUCCESS", createResult.getResponse().getContentAsString(), "publishCreateOrder API failed!!!");
 		assertEquals(order.getOrderNumber(), orderDetails.getOrderNumber(), "Order Number update isn't applied!");
 	}
-	
-	
+
 //	@Test
 //	public void TestCreateOrderQueueAPIFail() throws Exception {
 //		Orders order = getOrderData();
@@ -74,36 +70,34 @@ public class TestOrderAPIServices {
 //		System.out.println("TestCreateOrderQueueAPIFail----->" + createResult.getResponse().getContentAsString());
 //		assertEquals("", createResult.getResponse().getContentAsString(), "publishCreateOrder API failed!!!");
 //	}
-	
+
 	@Test
 	public void TestUpdateOrderStatusQueueAPISuccess() throws Exception {
-		
-		MvcResult updateResult = this.mockMvc
-			    .perform(put(String.format("/api/v1/orderqueue/publishUpdateOrder/%s", orderNumber))
-				.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andReturn();
 
-		System.out.println("TestUpdateOrderStatusQueueAPISuccess----->" + updateResult.getResponse().getContentAsString());
+		MvcResult updateResult = this.mockMvc
+				.perform(put(String.format("/api/v1/orderqueue/publishUpdateOrder/%s", orderNumber))
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andReturn();
+
+		System.out.println(
+				"TestUpdateOrderStatusQueueAPISuccess----->" + updateResult.getResponse().getContentAsString());
 		assertEquals("SUCCESS", updateResult.getResponse().getContentAsString(), "publishUpdateOrder API failed!!!");
 	}
-	
+
 	@Test
 	public void TestGetByOrderNumberSuccess() throws Exception {
-		
- 		MvcResult orderResult = this.mockMvc
-				.perform(get(String.format("/api/v1/order/getByNumber/%s", orderNumber))
-				.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andReturn();
 
-		Orders orderview = JsonSerializer.fromJson(objectMapper, orderResult.getResponse().getContentAsString(), Orders.class);
+		MvcResult orderResult = this.mockMvc.perform(
+				get(String.format("/api/v1/order/getByNumber/%s", orderNumber)).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andReturn();
+
+		Orders orderview = jsonSerializer.fromJson(orderResult.getResponse().getContentAsString(), Orders.class);
 		System.out.println("TestGetByOrderNumberSuccess----->" + orderview.getOrderNumber());
 
 		assertNotNull(orderview.getOrderNumber(), "Order Number must not be null!");
 		assertEquals(orderNumber, orderview.getOrderNumber(), "Order Number update isn't applied!");
 	}
-	
+
 //	@Test
 //	public void TestDeleteOrderSuccess() throws Exception {
 //
@@ -117,8 +111,8 @@ public class TestOrderAPIServices {
 //		System.out.println("TestDeleteOrderSuccess----->" + orderview.getOrderNumber());
 //
 //	}
-	
-	public Orders getOrderData(String orderNumber) {
+
+	private Orders getOrderMockData(String orderNumber) {
 		OrderLineItems lineitems = new OrderLineItems();
 		lineitems.setLineItem("1");
 		lineitems.setOrderQuantity("10");
@@ -135,7 +129,7 @@ public class TestOrderAPIServices {
 		order.setLineItems(listlineItems);
 		return order;
 	}
-	
+
 	public Orders getOrderData() {
 		return null;
 	}
